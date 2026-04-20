@@ -1,61 +1,140 @@
-# EcoScanAI (Earth Day Edition)
+# EcoScanAI 🌍♻️  
+**AI-powered waste scanning to improve disposal decisions and reduce carbon impact.**
 
-## Demo URLs
-- [Demo 1](http://demo-url-1.com)
-- [Demo 2](http://demo-url-2.com)
+Live Demo (Render): **https://ecoscan-ai-sha-c2ba78b.onrender.com/**
 
-## High-Level Architecture
-![](architecture-diagram.png)
+---
+<img width="1151" height="776" alt="Screenshot 2026-04-20 at 12 29 16 PM" src="https://github.com/user-attachments/assets/efdfcbbe-7581-403c-b4f0-34125b72f576" />
 
-## Tech Stack
-- Frontend: React
-- Backend: Node.js
-- Database: MongoDB
-- Cloud Services: Gemini, Azure OpenAI
 
-## API Documentation
-### POST /api/scan
-- **Request Body:**
-  ```json
-  {
-    "image": "base64-image-string",
-    "metadata": { "key": "value" }
+## Why EcoScanAI?
+EcoScanAI helps people quickly understand **what an item is**, **what it’s made of**, and **how to dispose of it responsibly** (Recycle / Compost / Landfill / Hazardous / Reuse).  
+It also provides a simple **carbon-saved estimate** and a practical tip to encourage better habits.
+
+Built for **DEV Weekend Challenge: Earth Day Edition (April 2026)**.
+
+---
+
+## Key Features
+- Image-based waste/item scanning (upload a photo)
+- AI returns **structured JSON**:
+  - item name
+  - material
+  - disposal category
+  - estimated carbon saved
+  - eco tip
+- Caching (by image hash) to reduce repeated AI calls
+- Rate limiting to protect the API
+- Dockerized + CI pipeline
+
+---
+
+## App Links
+- **Web App**: https://ecoscan-ai-sha-c2ba78b.onrender.com/  
+- **Health Check**: https://ecoscan-ai-sha-c2ba78b.onrender.com/health  
+
+---
+
+## Architecture (Diagram)
+```mermaid
+flowchart LR
+  U[User] -->|Upload photo| UI[Web UI]
+  UI -->|POST /api/scan (multipart image)| API[Go (Gin) API]
+
+  API --> RL[Rate Limiter]
+  API --> SEC[Security Headers]
+  API --> C{Cache hit?}
+
+  C -->|Yes| R1[Return cached result]
+  C -->|No| AI[AI Vision Provider\n(Gemini / Azure OpenAI)]
+  AI --> J[Validate JSON response]
+  J --> STORE[Store in cache (TTL)]
+  STORE --> R2[Return result]
+```
+
+---
+
+## API
+### `POST /api/scan`
+- Upload field: `image`
+- Type: `multipart/form-data`
+
+**Example response**
+```json
+{
+  "result": {
+    "item": "Plastic bottle",
+    "material": "PET plastic",
+    "disposal": "Recycle",
+    "carbon_save": "50g CO2",
+    "tips": "Rinse the bottle and remove the cap before recycling."
   }
-  ```
-- **Response:**
-  ```json
-  {
-    "result": "scan-result"
-  }
-  ```
+}
+```
 
-## Environment Variables
-- **Gemini:**
-  - `GEMINI_API_KEY`: Your Gemini API key.
-- **Azure OpenAI:**
-  - `AZURE_OPENAI_API_KEY`: Your Azure OpenAI API key.
+---
 
-## Local Run Steps
-1. Clone the repository.
-2. Install dependencies: `npm install`.
-3. Start the server: `npm start`.
+## Run Locally (Go)
+```bash
+git clone https://github.com/praveenarjun/EcoScanAI.git
+cd EcoScanAI
+go mod download
+go run .
+```
 
-## Docker Instructions
-1. Build the Docker image: `docker build -t ecoscanai .`
-2. Run the Docker container: `docker run -p 3000:3000 ecoscanai`
+Open: `http://localhost:8080`
 
-## CI/CD Notes
-- Integrate with GitHub Actions for automated testing and deployment.
+---
 
-## Sustainability Angle
-EcoScanAI aims to leverage AI to promote sustainability through efficient resource management.
+## Run with Docker
+```bash
+docker build -t ecoscanai .
+docker run --rm -p 8080:8080 \
+  -e AI_PROVIDER=gemini \
+  -e GEMINI_API_KEY=YOUR_KEY_HERE \
+  ecoscanai
+```
+
+---
+
+## Environment Variables (Summary)
+### Gemini
+- `AI_PROVIDER=gemini`
+- `GEMINI_API_KEY=...`
+- `GEMINI_MODEL=...` (optional)
+
+### Azure OpenAI (optional)
+- `AI_PROVIDER=azure`
+- `AZURE_OPENAI_ENDPOINT=...`
+- `AZURE_OPENAI_API_KEY=...`
+- `AZURE_OPENAI_DEPLOYMENT=...`
+
+---
+
+## CI/CD
+GitHub Actions runs:
+- `gofmt` formatting check
+- `go test ./...`
+- `go build`
+- Docker image build/push to GHCR on push to the default branch
+
+---
+
+## Screenshots
+> Add screenshots here for maximum judging impact:
+- `assets/home.png`
+- `assets/result.png`
+- `assets/mobile.png`
+
+---
 
 ## Roadmap
-- **Q2 2026:** Launch MVP.
-- **Q3 2026:** Develop additional features based on user feedback.
+- Add region-based disposal rules (country/city)
+- Add scan history + streaks
+- Add confidence score + follow-up questions
+- Add barcode/label detection
 
-## License
-This project is licensed under the MIT License.
+---
 
 ## Author
-Credit to [@praveenarjun](https://github.com/praveenarjun) for the development of EcoScanAI.
+Built by **@praveenarjun**
