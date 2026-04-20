@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EcoScan AI | Earth Day Edition</title>
+  <meta name="description" content="Upload an item photo, identify its material, get disposal guidance, and estimate carbon impact.">
+  <meta name="theme-color" content="#0f281b">
+  <meta property="og:title" content="EcoScan AI | Earth Day Edition">
+  <meta property="og:description" content="AI-powered disposal guidance and carbon impact storytelling from a single image.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='48'%3E%F0%9F%8C%8D%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css?v=20260420a">
+</head>
+<body>
+  <div class="aurora"></div>
+  <main class="shell">
+    <header class="hero">
+      <p class="badge">Weekend Challenge: Earth Day Edition</p>
+      <h1>Scan Waste. Save Carbon. Build Better Habits.</h1>
+      <p class="subtitle">
+        EcoScan AI turns a simple photo into disposal guidance, carbon impact insight, and a clear next action so anyone can make smarter Earth-friendly decisions.
+      </p>
+    </header>
+
+    <section class="grid">
+      <article class="panel upload-panel">
+        <h2>Upload an Item</h2>
+        <p class="muted">Take a photo of trash or a product package and submit for analysis.</p>
+
+        <form id="scanForm" class="upload-form" enctype="multipart/form-data">
+          <label class="dropzone" for="imageInput" id="dropzone">
+            <input id="imageInput" name="image" type="file" accept="image/*" capture="environment" required aria-label="Upload an item image for EcoScan analysis">
+            <span id="dropText">Drop image here or click to browse</span>
+          </label>
+          <p class="muted">Best results: clear photo, one main item, good lighting.</p>
+
+          <div class="preview-wrap" id="previewWrap" hidden>
+            <img id="preview" alt="Uploaded preview">
+          </div>
+
+          <button id="scanBtn" class="cta" type="submit">Analyze Item</button>
+        </form>
+      </article>
+
+      <article class="panel result-panel" id="resultPanel">
+        <h2>Impact Report</h2>
+        <p class="muted" id="statusText" aria-live="polite">Submit an image to see disposal and carbon guidance.</p>
+
+        <div class="impact-story" id="impactStory" hidden>
+          <p class="story-kicker">Earth Day Momentum</p>
+          <h3 id="storyTitle">Your Scan Made a Difference</h3>
+          <p id="storyBody">Small daily decisions can create measurable environmental impact.</p>
+          <div class="story-footer">
+            <span class="score-pill" id="impactScore">Impact Score: 0/100</span>
+            <span id="nextAction">Next action: keep scanning and sharing.</span>
+          </div>
+        </div>
+
+        <div id="resultContent" hidden>
+          <div class="kv">
+            <span>Item</span>
+            <strong id="itemValue">-</strong>
+          </div>
+          <div class="kv">
+            <span>Material</span>
+            <strong id="materialValue">-</strong>
+          </div>
+          <div class="kv">
+            <span>Disposal</span>
+            <strong id="disposalValue">-</strong>
+          </div>
+          <div class="kv">
+            <span>Eco Tip</span>
+            <strong id="tipsValue">-</strong>
+          </div>
+
+          <div class="impact">
+            <div class="impact-head">
+              <span>Estimated Carbon Saved</span>
+              <strong id="carbonValue">0g CO2</strong>
+            </div>
+            <div class="progress-track" aria-label="Carbon impact progress">
+              <div id="progressBar" class="progress-fill" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="meta">
+            <span id="sourceValue">Source: -</span>
+            <span id="latencyValue">Latency: -</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>How It Works</h2>
+        <p class="muted">Built for fast, practical action in under 5 seconds.</p>
+        <div class="kv">
+          <span>1. Vision Identification</span>
+          <strong>Detects item + material from your photo</strong>
+        </div>
+        <div class="kv">
+          <span>2. Disposal Recommendation</span>
+          <strong>Recycle, compost, landfill, hazardous, or reuse</strong>
+        </div>
+        <div class="kv">
+          <span>3. Impact Narrative</span>
+          <strong>Carbon estimate + behavior nudge for next action</strong>
+        </div>
+      </article>
+    </section>
+
+    <footer class="hero" style="margin-top:1rem;">
+      <p class="subtitle">EcoScan AI is built for the planet: reducing disposal confusion, improving community recycling habits, and helping users see the climate impact of everyday choices.</p>
+    </footer>
+  </main>
+
+  <noscript>
+    <div style="padding:1rem; text-align:center; color:#f3f3e8;">Please enable JavaScript to upload images and view analysis results.</div>
+  </noscript>
+
+  <script src="/static/app.js?v=20260420a"></script>
+</body>
+</html>

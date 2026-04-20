@@ -1,0 +1,42 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Project binaries
+/ecoscan
+/bin/
+/dist/
+/build/
+
+# Test and coverage
+coverage.out
+*.cover
+*.cov
+
+# Logs and temp files
+*.log
+tmp/
+temp/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dependency/vendor (keep if you don't vendor deps)
+vendor/
